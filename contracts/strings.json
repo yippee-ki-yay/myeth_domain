@@ -1,8 +1,0 @@
-{
-  "contract_name": "strings",
-  "abi": [],
-  "unlinked_binary": "0x60606040523415600b57fe5b5b60338060196000396000f30060606040525bfe00a165627a7a72305820bf6d4c078f68721fc73605c30819013f45bc94d379fd1c5bdd6cc49d2eb6311f0029",
-  "networks": {},
-  "schema_version": "0.0.5",
-  "updated_at": 1503578975395
-}
