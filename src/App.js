@@ -63,8 +63,6 @@ class App extends Component {
 
     const ipAddress = await instance.lookup.call("test.myeth", {from: eth.accounts[0]});
 
-    console.log(ipAddress);
-
   }
 
   searchDomain = async () => {
@@ -84,6 +82,27 @@ class App extends Component {
 
   }
 
+  registerDomain = async () => {
+
+    const contract = this.state.contractInstance;
+    const ipAddress = this.state.ipAddress;
+    const domainName = this.state.domainName;
+    const account = this.state.web3.eth.accounts[0];
+
+    if(ipAddress || domainName) {
+
+      await contract.registerDomain(ipAddress, domainName, {from: account});
+
+      console.log("Domain is registered");
+
+      this.setState({
+        ipAddress : "",
+        domainName : ""
+      });
+    }
+    
+  }
+
   render() {
     return (
       <div className="App">
@@ -99,7 +118,7 @@ class App extends Component {
               <input type="text" name="domainName" value={ this.state.domainName } onChange={ this.handleChange } />
               <p>Your ip address: </p>
               <input type="text" name="ipAddress" value={ this.state.ipAddress } onChange={ this.handleChange } />
-              <button>Register Domain</button>
+              <button onClick={ this.registerDomain }>Register Domain</button>
 
               <h1>Search domain name</h1>
               <input type="text" name="query" value={ this.state.query } onChange={ this.handleChange }/>
