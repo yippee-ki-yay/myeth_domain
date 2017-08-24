@@ -2,6 +2,7 @@
   "name": "react-box",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://yippee-ki-yay.github.io/myeth_domain",
   "devDependencies": {
     "autoprefixer": "6.5.1",
     "babel-core": "6.17.0",
@@ -50,13 +51,16 @@
   },
   "dependencies": {
     "dotenv": "^2.0.0",
+    "gh-pages": "^1.0.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "jest": {
     "collectCoverageFrom": [

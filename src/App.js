@@ -113,16 +113,21 @@ class App extends Component {
         <main className="container">
           <div className="pure-g">
             <div className="pure-u-1-1">
-              <h1>Register your name</h1>
-              <p>Your domain name: </p>
-              <input type="text" name="domainName" value={ this.state.domainName } onChange={ this.handleChange } />
-              <p>Your ip address: </p>
-              <input type="text" name="ipAddress" value={ this.state.ipAddress } onChange={ this.handleChange } />
-              <button onClick={ this.registerDomain }>Register Domain</button>
 
-              <h1>Search domain name</h1>
-              <input type="text" name="query" value={ this.state.query } onChange={ this.handleChange }/>
-              <button onClick={ this.searchDomain }>Search Domain</button>
+              <div>
+                <h1>Register your name</h1>
+                <p>Your domain name: </p>
+                <input type="text" name="domainName" value={ this.state.domainName } onChange={ this.handleChange } />
+                <p>Your ip address: </p>
+                <input type="text" name="ipAddress" value={ this.state.ipAddress } onChange={ this.handleChange } />
+                <button onClick={ this.registerDomain }>Register Domain</button>
+              </div>
+
+              <div>
+                <h1>Search domain name</h1>
+                <input type="text" name="query" value={ this.state.query } onChange={ this.handleChange }/>
+                <button onClick={ this.searchDomain }>Search Domain</button>
+              </div>
             </div>
           </div>
         </main>
