@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import DnsContract from '../build/contracts/DomainNameRegistry.json';
-import HelloWorldContract from '../build/contracts/HelloWorld.json';
 import getWeb3 from './utils/getWeb3'
 
 import './css/oswald.css'
@@ -15,7 +14,10 @@ class App extends Component {
     this.state = {
       storageValue: 0,
       web3: null,
-      msg: ""
+      domainName: "",
+      ipAddress: "",
+      query: "",
+      contractInstance: null
     }
   }
 
@@ -37,51 +39,49 @@ class App extends Component {
     })
   }
 
+  handleChange = (event) => {
+    this.setState({
+      [event.target.name] : event.target.value
+    })
+  }
+
   async instantiateContract() {
 
     const contract = require('truffle-contract');
     const eth = this.state.web3.eth;
 
-    const dnsContractStorage = contract(DnsContract);
-    dnsContractStorage.setProvider(this.state.web3.currentProvider);
+    const dnsContract = contract(DnsContract);
+    dnsContract.setProvider(this.state.web3.currentProvider);
 
-    const instance = await dnsContractStorage.deployed();
-    
-    // const result = await instance.sayHi.call(eth.accounts[0]);
+    const instance = await dnsContract.deployed();
 
-    // this.setState({
-    //   msg: result
-    // });
+    this.setState({
+      contractInstance: instance
+    });
 
     await instance.registerDomain("127.0.0.1", "test.myeth", {from: eth.accounts[0]});
 
     const ipAddress = await instance.lookup.call("test.myeth", {from: eth.accounts[0]});
 
-
     console.log(ipAddress);
 
-    // Declaring this for later so we can chain functions on SimpleStorage.
-    //var simpleStorageInstance;
+  }
 
-    // Get accounts.
-    // this.state.web3.eth.getAccounts((error, accounts) => {
+  searchDomain = async () => {
 
+    const contract = this.state.contractInstance;
+    const account = this.state.web3.eth.accounts[0];
 
-    //   // simpleStorage.deployed().then((instance) => {
-    //   //   simpleStorageInstance = instance
+    const ipAddress = await contract.lookup.call(this.state.query, account);
 
-    //   //   // Stores a given value, 5 by default.
-    //   //   return simpleStorageInstance.set(1894, {from: accounts[0]})
-    //   // }).then((result) => {
-    //   //   // Get the value from the contract to prove it worked.
-    //   //   return simpleStorageInstance.get.call(accounts[0])
-    //   // }).then((result) => {
-    //   //   // Update state with the result.
-    //   //   return this.setState({ storageValue: result.c[0] })
-    //   // }).catch((err) => {
-    //   //   console.log(err);
-    //   // });
-    // })
+    if(ipAddress) {
+      window.open("http://" + ipAddress, "_blank");
+    }
+
+    this.setState({
+      query: ""
+    });
+
   }
 
   render() {
@@ -96,11 +96,14 @@ class App extends Component {
             <div className="pure-u-1-1">
               <h1>Register your name</h1>
               <p>Your domain name: </p>
-              <input type="text" />
+              <input type="text" name="domainName" value={ this.state.domainName } onChange={ this.handleChange } />
               <p>Your ip address: </p>
-              <input type="text" />
-              <h1>Smart Contract Example</h1>
-              <p>We read something from the blockchain m'lord: <b> { this.state.msg } </b> </p>
+              <input type="text" name="ipAddress" value={ this.state.ipAddress } onChange={ this.handleChange } />
+              <button>Register Domain</button>
+
+              <h1>Search domain name</h1>
+              <input type="text" name="query" value={ this.state.query } onChange={ this.handleChange }/>
+              <button onClick={ this.searchDomain }>Search Domain</button>
             </div>
           </div>
         </main>

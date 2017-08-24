@@ -13,7 +13,6 @@ contract DomainNameRegistry {
     
     function lookup(string domainName) returns (string) {
         return domainMapping[domainName];
-        //return "127.0.0.1";
     }
     
     function registerDomain(string domainAddress, string domainName) returns (string) {
