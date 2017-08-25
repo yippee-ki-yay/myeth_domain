@@ -53,15 +53,18 @@ class App extends Component {
     const dnsContract = contract(DnsContract);
     dnsContract.setProvider(this.state.web3.currentProvider);
 
-    const instance = await dnsContract.deployed();
+    //grab the contract deployed on the main net
+    const instance = dnsContract.at("0x8dCe58B0f1D03585f8F0458F65A5132fb92bfdcb");
+
+    // const instance = await dnsContract.deployed();
 
     this.setState({
       contractInstance: instance
     });
 
-    await instance.registerDomain("127.0.0.1", "test.myeth", {from: eth.accounts[0]});
+    // await instance.registerDomain("127.0.0.1", "test.myeth", {from: eth.accounts[0]});
 
-    const ipAddress = await instance.lookup.call("test.myeth", {from: eth.accounts[0]});
+    // const ipAddress = await instance.lookup.call("test.myeth", {from: eth.accounts[0]});
 
   }
 
@@ -74,6 +77,8 @@ class App extends Component {
 
     if(ipAddress) {
       window.open("http://" + ipAddress, "_blank");
+    } else {
+      console.error("Domain name not found");
     }
 
     this.setState({
@@ -115,19 +120,28 @@ class App extends Component {
             <div className="pure-u-1-1">
 
               <div>
-                <h1>Register your name</h1>
-                <p>Your domain name: </p>
-                <input type="text" name="domainName" value={ this.state.domainName } onChange={ this.handleChange } />
-                <p>Your ip address: </p>
-                <input type="text" name="ipAddress" value={ this.state.ipAddress } onChange={ this.handleChange } />
-                <button onClick={ this.registerDomain }>Register Domain</button>
+                <h1 className="search-box search-name">Search domain name</h1>
+
+                <div>
+                  <input className="search-input" type="text" name="query" placeholder="Try test.myeth" value={ this.state.query } onChange={ this.handleChange }/>
+                  <button className="search-btn" onClick={ this.searchDomain }>Search Domain</button>
+                </div>
+
               </div>
 
-              <div>
-                <h1>Search domain name</h1>
-                <input type="text" name="query" value={ this.state.query } onChange={ this.handleChange }/>
-                <button onClick={ this.searchDomain }>Search Domain</button>
+              <div className="register-box">
+                <h4>Register a new name</h4>
+                <div className="reg-box">
+                  <p className="domain-text">Your domain name: </p>
+                  <input type="text" name="domainName" value={ this.state.domainName } onChange={ this.handleChange } />
+                  <p className="ip-text">Your ip address: </p>
+                  <input type="text" name="ipAddress" value={ this.state.ipAddress } onChange={ this.handleChange } />
+                  <div className="reg-div">
+                    <button className="reg-btn" onClick={ this.registerDomain }>Register Domain</button>
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
         </main>

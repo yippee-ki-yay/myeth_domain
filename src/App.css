@@ -34,6 +34,68 @@ code {
   border-color: #0c1a2b;
 }
 
+.search-box {
+    margin: auto;
+    width: 50%;
+    padding: 60px;
+}
+
+.reg-div {
+  margin-top: 10px;
+}
+
+.reg-btn {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.register-box {
+  margin-top: 200px;
+  margin: auto;
+    width: 50%;
+    padding: 100px;
+}
+
+.reg-box {
+  padding-left: 20px;
+}
+
+.domain-text {
+  padding-left: 15px;
+}
+
+.ip-text {
+  padding-left: 15px;
+  padding-top: 10px;
+}
+
+.search-name {
+  font-size: 40px;
+}
+
+.search-input {
+  width: 900px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.search-btn {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
 /* NAVBAR */
 
 .navbar {
